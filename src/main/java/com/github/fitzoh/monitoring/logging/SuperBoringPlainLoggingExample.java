@@ -1,4 +1,5 @@
-package com.github.fitzoh.loggingexample;
+package com.github.fitzoh.monitoring.logging;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,12 +7,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-
 @Profile("!json")
 @Component
-public class SuperBoringPlainLogExample implements CommandLineRunner {
+public class SuperBoringPlainLoggingExample implements CommandLineRunner {
 
-    private static Logger log = LoggerFactory.getLogger(SuperBoringPlainLogExample.class);
+    private static Logger log = LoggerFactory.getLogger(SuperBoringPlainLoggingExample.class);
 
     /**
      * 2019-02-23 10:01:03.118  INFO 7777 --- [           main] c.g.f.l.SuperBoringPlainLogExample       : doing a thing 0

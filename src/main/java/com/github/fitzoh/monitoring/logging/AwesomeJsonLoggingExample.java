@@ -1,4 +1,4 @@
-package com.github.fitzoh.loggingexample;
+package com.github.fitzoh.monitoring.logging;
 
 import net.logstash.logback.argument.StructuredArguments;
 import net.logstash.logback.marker.Markers;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 
 @Profile("json")
 @Component
-public class AwesomeJsonLogExample implements CommandLineRunner {
+public class AwesomeJsonLoggingExample implements CommandLineRunner {
 
-    private static Logger log = LoggerFactory.getLogger(AwesomeJsonLogExample.class);
+    private static Logger log = LoggerFactory.getLogger(AwesomeJsonLoggingExample.class);
 
     /**
      * {"@timestamp":"2019-02-23T10:01:42.277-05:00","@version":"1","message":"doing a thing structured_value=0","logger_name":"com.github.fitzoh.loggingexample.AwesomeJsonLogExample","thread_name":"main","level":"INFO","level_value":20000,"mdc_value":"0","marker_value":0,"structured_value":0}

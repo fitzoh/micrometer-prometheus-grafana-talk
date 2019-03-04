@@ -1,10 +1,8 @@
-package com.github.fitzoh.micrometersamples;
+package com.github.fitzoh.monitoring.snippets;
 
 import io.micrometer.core.instrument.*;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
@@ -12,12 +10,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@SpringBootApplication
-public class MicrometerSamplesApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(MicrometerSamplesApplication.class, args);
-    }
+public class MicrometerSnippets {
 
 
     public void doSomething() {
@@ -127,6 +120,34 @@ public class MicrometerSamplesApplication {
         System.out.println("total: " + summary.totalAmount());
         System.out.println("mean: " + summary.mean());
         System.out.println("max: " + summary.max());
+    }
+
+
+    public void percentileExample() {
+        MeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+
+        Timer timer = Timer.builder("my.timer")
+                .description("time some things")
+                .publishPercentiles(50, 75, 90, 95, 99)
+                .register(registry);
+    }
+
+    public void slaExample() {
+        MeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+
+        Timer timer = Timer.builder("my.timer")
+                .description("time some things")
+                .sla(Duration.ofMillis(200), Duration.ofMillis(1000))
+                .register(registry);
+    }
+
+    public void precentileExample() {
+        MeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+
+        Timer timer = Timer.builder("my.timer")
+                .description("time some things")
+                .publishPercentiles(50, 75, 90, 95, 99)
+                .register(registry);
     }
 
 }
