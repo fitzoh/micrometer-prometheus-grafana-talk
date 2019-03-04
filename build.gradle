@@ -22,3 +22,22 @@ dependencies {
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+
+String prometheusContainer = "prometheus"
+task startPrometheus(type: Exec) {
+    commandLine "docker", "run", "-d", "-p", "9090:9090", "--name", prometheusContainer, "--rm", "prom/prometheus"
+}
+
+task stopPrometheusPrometheus(type: Exec) {
+    commandLine "docker", "kill", prometheusContainer
+}
+
+String grafanaContainer = "grafana"
+task startGrafana(type: Exec) {
+    commandLine "docker", "run", "-d", "-p", "3000:3000", "--name", grafanaContainer, "--rm", "grafana/grafana"
+}
+
+task stopGrafana(type: Exec) {
+    commandLine "docker", "kill", grafanaContainer
+}
