@@ -1,5 +1,6 @@
 package com.github.fitzoh.monitoring
 
+import io.micrometer.core.instrument.MeterRegistry
 import net.logstash.logback.argument.StructuredArguments
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono
 import java.time.Duration
 import java.time.Instant
 import java.util.*
+import java.util.concurrent.atomic.AtomicLong
 import java.util.concurrent.atomic.AtomicReference
 
 
@@ -117,11 +119,22 @@ class HttpStatusGenerator {
 @RestController
 class RandomEndpoint(
         val latencyGenerator: LatencyGenerator,
-        val httpStatusGenerator: HttpStatusGenerator) {
+        val httpStatusGenerator: HttpStatusGenerator,
+        meterRegistry: MeterRegistry) {
+    val randomWalk = AtomicLong()
+    val random = Random()
+
+    init {
+        meterRegistry.gauge("my.random.walk", randomWalk)
+    }
+
     @GetMapping("/random")
     fun endpoint(): Mono<ResponseEntity<String>> {
+        if (random.nextBoolean()) randomWalk.incrementAndGet() else randomWalk.decrementAndGet()
+
         val status = httpStatusGenerator.next()
         val latency = latencyGenerator.next()
+
         val response = ResponseEntity.status(status).body("status: $status\n latency: $latency ms")
         return Mono.just(response).delayElement(Duration.ofMillis(latency.toLong()))
     }
