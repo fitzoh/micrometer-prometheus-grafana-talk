@@ -1,6 +1,7 @@
 package com.github.fitzoh.monitoring
 
 import io.micrometer.core.instrument.MeterRegistry
+import io.micrometer.core.instrument.Metrics
 import net.logstash.logback.argument.StructuredArguments
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -41,6 +42,7 @@ class ChaosState(val type: String) {
 
     private val event = AtomicReference(ChaosEvent())
     private val lock = ReentrantLock()
+    private val timer = Metrics.globalRegistry.more().longTaskTimer("chaos", "type", type)
 
     fun isEventActive(): Boolean {
         val now = Instant.now()
@@ -59,8 +61,15 @@ class ChaosState(val type: String) {
             val end = start.plusSeconds(duration.toLong())
             event.set(ChaosEvent(start, end))
             Mono.delay(Duration.ofSeconds(secondsUntilNextEvent.toLong()))
-                    .subscribe { log.info("{} chaos event started", type) }
-            lock.unlock()
+                    .map {
+                        log.info("{} chaos event started", type)
+                        timer.start()
+                    }
+                    .delayElement(Duration.ofSeconds(duration.toLong()))
+                    .subscribe { sample ->
+                        log.info("{} chaos event ended", type)
+                        sample.stop()
+                    }
         }
     }
 
