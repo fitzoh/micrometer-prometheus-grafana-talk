@@ -57,7 +57,8 @@ task stopPrometheusPrometheus(type: Exec) {
 
 String grafanaContainer = "grafana"
 task startGrafana(type: Exec) {
-    commandLine "docker", "run", "-d", "-p", "3000:3000", "--name", grafanaContainer, "--rm", "grafana/grafana"
+    String grafanaDataVolume = project.file("grafana/data")
+    commandLine "docker", "run", "-d", "-p", "3000:3000", "-v", "$grafanaDataVolume:/var/lib/grafana","--name", grafanaContainer, "--rm", "grafana/grafana"
 }
 
 task stopGrafana(type: Exec) {
