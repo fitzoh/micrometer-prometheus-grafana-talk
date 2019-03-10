@@ -6,9 +6,17 @@ management:
     distribution:
       percentiles-histogram:
         http.server.requests: true
+    tags:
+      application: micrometer-sample
   endpoints:
     web:
       exposure:
         include: prometheus
+server:
+  port: 8080
 
 
+
+demo:
+  base-latency: 10
+  client-delay: 10

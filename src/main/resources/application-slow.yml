@@ -1,0 +1,9 @@
+server:
+  port: 8081
+
+
+
+
+demo:
+  base-latency: 200
+  client-delay: 10
