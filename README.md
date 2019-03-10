@@ -1,9 +1,37 @@
-# Logging
+# Application monitoring with Micrometer, Prometheus, and Grafana
 
-A simple example to show the difference between default [Spring Boot](https://spring.io/projects/spring-boot) logging settings and structured JSON logging using the [Logstash Logback Encoder](https://github.com/logstash/logstash-logback-encoder#standard-fields).
+Companion code for the (hopefully somewhat useful) presentation you just sat through!
+
+Feedback appreciated, @fitzoh on Twitter.
+
+### Links
+
+[Slides](https://docs.google.com/presentation/d/14Z23SLsCwZFDXOOFAcCoDAXf8LCmWbv99b9qXiQtRr0)
+
+[Micrometer](https://micrometer.io/)
+* [Micrometer slack inviter](http://slack.micrometer.io/)
+
+[Prometheus](https://prometheus.io/)
+* [PromQL cheat sheet](https://timber.io/blog/promql-for-humans/)
+* [Prometheus maintainer's blog](https://www.robustperception.io/blog)
+
+[Grafana](https://grafana.com)
+* [Grafana plugins](https://grafana.com/plugins)
 
 
-To run with the default logger: `./gradlew bootrun`
+[Logstash Logback Encoder](https://github.com/logstash/logstash-logback-encoder)
+
+[USE/RED methods](https://www.vividcortex.com/blog/monitoring-and-observability-with-use-and-red)
+
+[3 pillars of observability (take your pick)](https://www.google.com/search?q=3+pillars+of+observability)
+
+
+### Logging
+
+
+The `src/main/java/com/github/fitzoh/monitoring/logging` directory contains a simple example to show the difference between default [Spring Boot](https://spring.io/projects/spring-boot) logging settings and structured JSON logging using the [Logstash Logback Encoder](https://github.com/logstash/logstash-logback-encoder#standard-fields).
+
+On application startup (`./gradlew bootrun`), the default logger outputs something that looks like this:
 
 output:
 ```
@@ -19,7 +47,7 @@ output:
 2019-02-23 10:01:03.119  INFO 7777 --- [           main] c.g.f.l.SuperBoringPlainLogExample       : doing a thing 9
 ```
 
-To run with the json logger: `./gradlew bootRun --args='--spring.profiles.active=json'`
+If you run it with the json logger enabled (`./gradlew bootRun --args='--spring.profiles.active=json'`): 
 
 output:
 ```
