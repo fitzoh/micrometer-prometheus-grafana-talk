@@ -25,6 +25,7 @@ Feedback appreciated, @fitzoh on Twitter.
 
 [3 pillars of observability (take your pick)](https://www.google.com/search?q=3+pillars+of+observability)
 
+[Slide code snippets generated via Carbon](https://carbon.now.sh)
 
 ### Logging
 
