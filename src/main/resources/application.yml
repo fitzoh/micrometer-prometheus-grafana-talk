@@ -15,8 +15,6 @@ management:
 server:
   port: 8080
 
-
-
 demo:
   base-latency: 10
   client-delay: 10

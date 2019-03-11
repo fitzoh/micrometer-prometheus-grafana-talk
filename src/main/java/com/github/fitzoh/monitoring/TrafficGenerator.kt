@@ -1,5 +1,6 @@
 package com.github.fitzoh.monitoring
 
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.ApplicationListener
@@ -21,6 +22,7 @@ class TrafficGenerator(
         @Value("\${server.port}") val port: String
 ) : ApplicationListener<ApplicationReadyEvent> {
 
+    val log = LoggerFactory.getLogger(TrafficGenerator::class.java)
     val random = Random()
 
     fun url(): String {
@@ -38,8 +40,10 @@ class TrafficGenerator(
         val webClient = builder.build()
 
         Flux.interval(Duration.ofMillis(clientDelay))
+                .onBackpressureDrop { log.info("dropped $it from backpressure") }
                 .flatMap { webClient.get().uri(url()).exchange() }
-                .onErrorContinue { _, _ -> }
-                .subscribe()
+                .subscribe({}, { err -> log.info("error: {}", err) })
+
+        log.info("started traffic generator")
     }
 }
