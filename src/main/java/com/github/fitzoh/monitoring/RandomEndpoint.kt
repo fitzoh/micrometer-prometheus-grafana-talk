@@ -166,7 +166,7 @@ class RandomEndpoint(
 }
 
 @Component
-class Thingy(
+class TrafficGenerator(
         val builder: WebClient.Builder,
         @Value("\${demo.client-delay}") val clientDelay: Long,
         @Value("\${server.port}") val port: String
@@ -187,8 +187,10 @@ class Thingy(
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
 
         val webClient = builder.build()
+
         Flux.interval(Duration.ofMillis(clientDelay))
                 .flatMap { webClient.get().uri(url()).exchange() }
+                .onErrorContinue { _, _ -> }
                 .subscribe()
     }
 }
