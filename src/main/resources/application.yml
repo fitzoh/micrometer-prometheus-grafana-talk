@@ -6,6 +6,8 @@ management:
     distribution:
       percentiles-histogram:
         http.server.requests: true
+      maximum-expected-value:
+        http.server.requests: 5s
     tags:
       application: micrometer-sample
   endpoints:
