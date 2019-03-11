@@ -46,7 +46,6 @@ class TrafficGenerator(
                 .onBackpressureDrop { log.info("dropped $it from backpressure") }
                 .onErrorContinue { t, u -> log.error("first onErrorContinue") }
                 .flatMap { webClient.get().uri(url()).exchange() }
-                .onErrorContinue { t, u -> log.error("second onErrorContinue") }
                 .subscribe({}, { err -> log.info("subscribe error") })
 
         log.info("started traffic generator")
