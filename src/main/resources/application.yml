@@ -5,9 +5,13 @@ management:
         enabled: true
     distribution:
       percentiles-histogram:
-        http.server.requests: true
+        http.server.requests: true #histograms!
       maximum-expected-value:
-        http.server.requests: 5s
+        http.server.requests: 5s #don't create histogram buckets beyond 5 seconds
+      sla:
+        http.server.requests: 200ms,500ms #explicit SLA's at 200ms, 500ms (creates new histogram buckets
+      percentiles:
+        http.server.requests: 0.5,0.9,0.99 #expose p50, p90, p99
     tags:
       application: micrometer-sample
   endpoints:
