@@ -35,14 +35,19 @@ class TrafficGenerator(
         }
     }
 
+    /**
+     * I clearly don't know how to do proper error handling with Reactor.
+     */
     override fun onApplicationEvent(event: ApplicationReadyEvent) {
 
         val webClient = builder.build()
 
         Flux.interval(Duration.ofMillis(clientDelay))
                 .onBackpressureDrop { log.info("dropped $it from backpressure") }
+                .onErrorContinue { t, u -> log.error("first onErrorContinue") }
                 .flatMap { webClient.get().uri(url()).exchange() }
-                .subscribe({}, { err -> log.info("error: {}", err) })
+                .onErrorContinue { t, u -> log.error("second onErrorContinue") }
+                .subscribe({}, { err -> log.info("subscribe error") })
 
         log.info("started traffic generator")
     }
