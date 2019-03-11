@@ -47,7 +47,7 @@ Start Prometheus via `./gradlew startPrometheus`.  You can view the UI at port `
 
 ###### Grafana
 
-Start Grafana via `./gradlew startGrafana`.  You can view the UI at port `3000` (log in with admin:admin).  State is persisted through a volume in the `grafana` directory.
+Start Grafana via `./gradlew startGrafana`.  You can view the UI at port `3000` (log in with admin:grafana).  State is persisted through a volume in the `grafana` directory.
 
 
 ### Logging
