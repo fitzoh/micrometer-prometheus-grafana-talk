@@ -27,8 +27,30 @@ Feedback appreciated, @fitzoh on Twitter.
 
 [Slide code snippets generated via Carbon](https://carbon.now.sh)
 
-### Logging
 
+### Demo
+
+Instructions assume a *NIX machine, sorry windows people.  Some steps block, use multiple terminals where necessary. Prometheus and Grafana require Docker.
+
+###### Spring Boot Apps
+
+The demo assumes two instances of the Spring Boot service are running.
+Start them like this:
+* `./gradlew bootRun`
+* `SPRING_PROFILES_ACTIVE=slow ./gradlew bootRun`
+
+They'll run on ports `8080` and `8081`.
+
+###### Prometheus
+
+Start Prometheus via `./gradlew startPrometheus`.  You can view the UI at port `9090`. The config file is `prometheus.yml`.
+
+###### Grafana
+
+Start Grafana via `./gradlew startGrafana`.  You can view the UI at port `3000` (log in with admin:admin).  State is persisted through a volume in the `grafana` directory.
+
+
+### Logging
 
 The `src/main/java/com/github/fitzoh/monitoring/logging` directory contains a simple example to show the difference between default [Spring Boot](https://spring.io/projects/spring-boot) logging settings and structured JSON logging using the [Logstash Logback Encoder](https://github.com/logstash/logstash-logback-encoder#standard-fields).
 
