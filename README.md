@@ -104,3 +104,10 @@ cleaned up with [jq](https://stedolan.github.io/jq/):
 
 Note that you won't generally log the same values using MDC, Markers, and structured arguments.
 All three are included here for the sake of demonstrating available options.
+
+[Promethenus Output](http://localhost:8080/actuator/prometheus)
+
+Create traffice using the application end points:
+* (http://localhost:8080/random) or (http://localhost:8081/random)
+* (http://localhost:8080/also-random) or (http://localhost:8081/also-random)
+* (http://localhost:8080/yet-another/random) or (http://localhost:8081/yet-another/random)
