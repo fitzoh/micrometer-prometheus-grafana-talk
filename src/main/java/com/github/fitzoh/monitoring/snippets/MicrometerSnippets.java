@@ -65,10 +65,6 @@ public class MicrometerSnippets {
                 .register(registry);
 
 
-        LongTaskTimer whatever = LongTaskTimer.builder("whatever")
-                .register(registry);
-
-
         //Runnable () -> Void
         timer.record(() -> System.out.println("doing work"));
         //Consumer () -> T
